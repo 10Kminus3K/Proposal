@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Arial Rounded MT Bold", "Comic Sans MS", cursive;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffd1dc, #ffe6eb);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* FLOATING HEARTS */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      background: white;
+      width: 100%;
+      max-width: 360px;
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 2;
+    }
+
+    .cat {
+      font-size: 56px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .buttons {
+      position: relative;
+      height: 90px;
+    }
+
+    button {
+      padding: 12px 26px;
+      font-size: 17px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      position: absolute;
+      background: #f1f1f1;
+      color: #333;
+    }
+
+    .hint {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .yay {
+      display: none;
+    }
+
+    .yay h1 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .yay img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- QUESTION CARD -->
+  <div class="card" id="questionCard">
+    <div class="cat">🐱💖</div>
+    <h1>Sabiha, Will you be my Wifeyy??</h1>
+
+    <div class="buttons">
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
+
+    <div class="hint">*No is feeling shy 😳*</div>
+  </div>
+
+  <!-- YAY CARD -->
+  <div class="card yay" id="yayCard">
+    <h1>I love you sooo muchh my babygirl😘💞</h1>
+    <img
+      src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDdhMnMweW83eWhhd285bzh5ajdvYzBsdGx1cG9pM3VnY3psbTRmaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5j4MSItGgMlOnFzIK4/giphy.gif"
+      alt="Celebration"
+    />
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const buttonsArea = document.querySelector(".buttons");
+    const yesBtn = document.getElementById("yes");
+    const questionCard = document.getElementById("questionCard");
+    const yayCard = document.getElementById("yayCard");
+
+    function moveNoButton() {
+      const areaRect = buttonsArea.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = areaRect.width - btnRect.width;
+      const maxY = areaRect.height - btnRect.height;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      questionCard.style.display = "none";
+      yayCard.style.display = "block";
+    });
+
+    moveNoButton();
+
+    /* CREATE FLOATING HEARTS */
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = Math.random() > 0.5 ? "💞" : "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+      heart.style.fontSize = 18 + Math.random() * 20 + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 10000);
+    }
+
+    setInterval(createHeart, 500);
+  </script>
+
+</body>
+</html>
